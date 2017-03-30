@@ -1,14 +1,17 @@
 package com.noteservice.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.noteservice.pojo.Note;
 import com.noteservice.pojo.NoteDTO;
 import com.noteservice.repositories.NotesRepository;
 
+@Service
 public class NoteService implements INoteService {
 
 	private NotesRepository notesRepository;
@@ -20,30 +23,40 @@ public class NoteService implements INoteService {
 
 	@Override
 	public NoteDTO createNote(NoteDTO note) {
-		return null;
+		Date currentDate = new Date();
+		Note noteEntity = new Note(note.getTitle(),note.getNote(),currentDate,currentDate);
+		Note newNoteEntity = notesRepository.save(noteEntity);
+		note.setCreatedDate(currentDate);
+		note.setUpdatedDate(currentDate);
+		note.setId(newNoteEntity.getId());
+		return note;
 	}
 
 	@Override
 	public NoteDTO updateNote(NoteDTO note) {
-		// TODO Auto-generated method stub
-		return null;
+		Date currentDate = new Date();
+		Note noteEntity = new Note(note.getTitle(),note.getNote(),note.getCreatedDate(),currentDate);
+		noteEntity = notesRepository.save(noteEntity);
+		note.setUpdatedDate(currentDate);
+		return note;
 	}
 
 	@Override
 	public void deleteNote(NoteDTO note) {
-		// TODO Auto-generated method stub
-		
+		Note noteEntity = new Note(note.getTitle(), note.getNote(),note.getCreatedDate(),note.getUpdatedDate());
+		noteEntity.setId(note.getId());
+		notesRepository.delete(noteEntity);
 	}
 
 	@Override
-	public void deleteNoteById(String NoteId) {
-		// TODO Auto-generated method stub
+	public void deleteNoteById(String noteId) {
+		notesRepository.delete(new Long(noteId));
 		
 	}
 
 	@Override
 	public NoteDTO getNoteById(String id) {
-		Note note = notesRepository.getOne(new Long(id));
+		Note note = notesRepository.findOne(new Long(id));
 		NoteDTO noteDto = new NoteDTO(note.getId(), note.getTitle(), note.getNote());
 		noteDto.setCreatedDate(note.getCreatedDate());
 		noteDto.setUpdatedDate(note.getUpdatedDate());

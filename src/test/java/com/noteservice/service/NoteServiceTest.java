@@ -1,8 +1,6 @@
 package com.noteservice.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -38,7 +36,7 @@ public class NoteServiceTest {
 	}
 	
 	@Test
-	public void tetsListUser() {
+	public void testListNotes() {
 		List<Note> notes = new ArrayList<>();
 		notes.add(new Note("Sample title", "Note sasasasd", new Date(), new Date()));
 		
@@ -55,7 +53,7 @@ public class NoteServiceTest {
 	}
 
 	@Test
-	public void tetsGetUserById() {
+	public void testGetNoteById() {
 		Long id = new Random().nextLong();
 		Note note = new Note("Sample title", "Note sasasasd", new Date(), new Date());
 		note.setId(id);
@@ -67,4 +65,20 @@ public class NoteServiceTest {
 		assertThat(note.getNote(),is(noteDTO.getNote()));
 	}
 
+	/*@Test
+	public void testCreateNote() {
+		Long id = new Random().nextLong();
+		Note note = new Note("Sample title", "Note sasasasd", new Date(), new Date());
+		Note note2 = new Note("Sample title", "Note sasasasd", new Date(), new Date());
+		NoteDTO noteDTO = new NoteDTO("Sample title", "Note sasasasd");
+		note.setId(id);
+		when(repositoryMock.save(note)).thenReturn(note2);
+
+		NoteDTO newNoteDTO = noteService.createNote(noteDTO);
+		assertNotNull(newNoteDTO);
+		assertNotNull(newNoteDTO.getId());
+		assertThat(note.getTitle(),is(newNoteDTO.getTitle()));
+		assertThat(note.getNote(),is(newNoteDTO.getNote()));
+	}
+*/
 }

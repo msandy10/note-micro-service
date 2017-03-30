@@ -24,10 +24,8 @@ public class Note {
 	private Date updatedDate;
 	
 	public Note() {
-		super();
 	}
 	public Note( String title, String note, Date createdDate, Date updatedDate) {
-		super();
 		this.title = title;
 		this.note = note;
 		this.createdDate = createdDate;

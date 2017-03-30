@@ -24,10 +24,10 @@ public class Note {
 	private Date updatedDate;
 	
 	public Note() {
-	}
-	public Note(long id, String title, String note, Date createdDate, Date updatedDate) {
 		super();
-		this.id = id;
+	}
+	public Note( String title, String note, Date createdDate, Date updatedDate) {
+		super();
 		this.title = title;
 		this.note = note;
 		this.createdDate = createdDate;

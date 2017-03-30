@@ -35,9 +35,10 @@ public class NoteController {
 	
 	@GetMapping
 	public ResponseEntity<List<NoteDTO>> getUsers(){
-		List<NoteDTO> notes =noteService.getNotes();
+		List<NoteDTO> notes =noteService.getNotesByCreatedBy(getLoginUserEmailId());
 		return new ResponseEntity<List<NoteDTO>>(notes, HttpStatus.OK);
 	}
+	
 	
 	@GetMapping
 	@RequestMapping("/{noteId}")
@@ -69,13 +70,6 @@ public class NoteController {
 		return new ResponseEntity<String>(USER_HAS_BEEN_UPDATED_SUCCESFULLY, HttpStatus.ACCEPTED);
 	}
 
-/*	@DeleteMapping
-	@RequestMapping("/{id}")
-	public ResponseEntity<String> deleteNoteByID(@PathVariable String id){
-		noteService.deleteNoteById(id);
-		return new ResponseEntity<String>(USER_HAS_BEEN_UPDATED_SUCCESFULLY, HttpStatus.ACCEPTED);
-	}*/
-	
 	@DeleteMapping
 	public ResponseEntity<String> deleteNote(@RequestBody NoteDTO noteDTO){
 		noteService.deleteNote(noteDTO);

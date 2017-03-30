@@ -11,4 +11,5 @@ public interface INoteService {
 	void deleteNoteById(String NoteId);
 	NoteDTO getNoteById(String id);
 	List<NoteDTO> getNotes();
+	List<NoteDTO> getNotesByCreatedBy(String user);
 }

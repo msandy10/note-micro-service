@@ -85,4 +85,20 @@ public class NoteService implements INoteService {
 		}
 		return noteDtos;
 	}
+	
+	@Override
+	public List<NoteDTO> getNotesByCreatedBy(String user) {
+		List<Note> notes = notesRepository.getNotesByCreatedBy(user);
+		List<NoteDTO> noteDtos = new ArrayList<>(); 
+		NoteDTO notedto = null;
+		for (Note note : notes) {
+			notedto = new  NoteDTO(note.getId(),note.getTitle(),note.getNote());
+			notedto.setCreatedDate(note.getCreatedDate());
+			notedto.setUpdatedDate(note.getUpdatedDate());
+			notedto.setCreatedBy(note.getCreatedBy());
+			notedto.setUpdatedBy(note.getUpdatedBy());
+			noteDtos.add(notedto);
+		}
+		return noteDtos;
+	}
 }

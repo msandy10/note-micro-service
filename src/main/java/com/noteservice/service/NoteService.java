@@ -15,7 +15,7 @@ import com.noteservice.repositories.NotesRepository;
 public class NoteService implements INoteService {
 
 	private NotesRepository notesRepository;
-	
+
 	@Autowired
 	public void setNotesRepository(NotesRepository notesRepository) {
 		this.notesRepository = notesRepository;
@@ -25,6 +25,8 @@ public class NoteService implements INoteService {
 	public NoteDTO createNote(NoteDTO note) {
 		Date currentDate = new Date();
 		Note noteEntity = new Note(note.getTitle(),note.getNote(),currentDate,currentDate);
+		noteEntity.setCreatedBy(note.getCreatedBy());
+		noteEntity.setUpdatedBy(note.getUpdatedBy());
 		Note newNoteEntity = notesRepository.save(noteEntity);
 		note.setCreatedDate(currentDate);
 		note.setUpdatedDate(currentDate);
@@ -36,6 +38,9 @@ public class NoteService implements INoteService {
 	public NoteDTO updateNote(NoteDTO note) {
 		Date currentDate = new Date();
 		Note noteEntity = new Note(note.getTitle(),note.getNote(),note.getCreatedDate(),currentDate);
+		noteEntity.setUpdatedBy(note.getUpdatedBy());
+		noteEntity.setCreatedBy(note.getCreatedBy());
+		noteEntity.setId(note.getId());
 		noteEntity = notesRepository.save(noteEntity);
 		note.setUpdatedDate(currentDate);
 		return note;
@@ -60,6 +65,8 @@ public class NoteService implements INoteService {
 		NoteDTO noteDto = new NoteDTO(note.getId(), note.getTitle(), note.getNote());
 		noteDto.setCreatedDate(note.getCreatedDate());
 		noteDto.setUpdatedDate(note.getUpdatedDate());
+		noteDto.setCreatedBy(note.getCreatedBy());
+		noteDto.setUpdatedBy(note.getUpdatedBy());
 		return noteDto;
 	}
 
@@ -72,6 +79,8 @@ public class NoteService implements INoteService {
 			notedto = new  NoteDTO(note.getId(),note.getTitle(),note.getNote());
 			notedto.setCreatedDate(note.getCreatedDate());
 			notedto.setUpdatedDate(note.getUpdatedDate());
+			notedto.setCreatedBy(note.getCreatedBy());
+			notedto.setUpdatedBy(note.getUpdatedBy());
 			noteDtos.add(notedto);
 		}
 		return noteDtos;

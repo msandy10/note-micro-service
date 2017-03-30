@@ -2,14 +2,11 @@ package com.noteservice.pojo;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,19 +22,19 @@ public class Note {
 	private String note;
 	private Date createdDate;
 	private Date updatedDate;
+	private String createdBy;
+	private String updatedBy;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
-	private User user;
-	
-	public Note() {
-	}
 	public Note( String title, String note, Date createdDate, Date updatedDate) {
 		this.title = title;
 		this.note = note;
 		this.createdDate = createdDate;
 		this.updatedDate = updatedDate;
 	}
+
+	public Note() {
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -68,4 +65,21 @@ public class Note {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	
 }

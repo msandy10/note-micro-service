@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,8 @@ public class NoteController {
 	@Autowired
 	INoteService noteService;
 	
+	
+	
 	@GetMapping
 	public ResponseEntity<List<NoteDTO>> getUsers(){
 		List<NoteDTO> notes =noteService.getNotes();
@@ -45,13 +49,22 @@ public class NoteController {
 	
 	@PostMapping
 	public ResponseEntity<String> creteUser(@Valid @RequestBody NoteDTO notes){
+		notes.setCreatedBy(getLoginUserEmailId());
+		notes.setUpdatedBy(getLoginUserEmailId());
 		noteService.createNote(notes);
 		return new ResponseEntity<String>(USER_HAS_BEEN_CRETED_SUCCESFULLY, HttpStatus.CREATED);
+	}
+
+	private String getLoginUserEmailId() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		return currentPrincipalName;
 	}
 	
 	
 	@PutMapping
 	public ResponseEntity<String> updateUser(@RequestBody NoteDTO noteDTO){
+		noteDTO.setUpdatedBy(getLoginUserEmailId());
 		noteService.updateNote(noteDTO);
 		return new ResponseEntity<String>(USER_HAS_BEEN_UPDATED_SUCCESFULLY, HttpStatus.ACCEPTED);
 	}

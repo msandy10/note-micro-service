@@ -7,6 +7,8 @@ public class NoteDTO extends Audit{
 	private Long id;
 	private String title;
 	private String note;
+	private String createdBy;
+	private String updatedBy;
 	
 	public Long getId() {
 		return id;
@@ -34,5 +36,17 @@ public class NoteDTO extends Audit{
 		this.id = id;
 		this.title = title;
 		this.note = note;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 }
